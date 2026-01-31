@@ -79,14 +79,15 @@ export default function MarketCapitalFlow() {
       },
       legend: {
         show: true,
-        top: 10,
-        textStyle: { color: axisLabelColor },
+        top: 8,
+        textStyle: { color: axisLabelColor, fontSize: 10 },
+        itemGap: 8,
       },
       grid: {
-        top: 55,
-        bottom: 30,
-        left: 60,
-        right: 20,
+        top: 70,
+        bottom: 25,
+        left: 50,
+        right: 15,
       },
       xAxis: {
         type: 'category',
@@ -178,23 +179,35 @@ export default function MarketCapitalFlow() {
   }
 
   return (
-    <div className="space-y-4">
-      {/* 成交额统计 */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-        <span>两市合计成交额：<span className="font-bold">{totalTurnover}亿元</span></span>
-        <span>上涨：<span className="font-bold text-up">{upCount}</span></span>
-        <span>平盘：<span className="font-bold">{flatCount}</span></span>
-        <span>下跌：<span className="font-bold text-down">{downCount}</span></span>
-      </div>
-
+    <div className="space-y-3">
       {/* 图表 */}
-      <div className="h-[260px]">
+      <div className="h-[260px] sm:h-[280px]">
         <ReactEChartsCore
           echarts={echarts}
           option={getChartOption()}
           style={{ height: '100%', width: '100%' }}
           opts={{ renderer: 'canvas' }}
         />
+      </div>
+
+      {/* 数据统计 */}
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-3 text-sm bg-muted/30 rounded-lg p-2 sm:p-3">
+        <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-md bg-background/50">
+          <span className="text-muted-foreground text-xs mb-0.5 sm:mb-1">成交额</span>
+          <span className="font-bold text-sm sm:text-base">{totalTurnover}亿</span>
+        </div>
+        <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-md bg-background/50">
+          <span className="text-muted-foreground text-xs mb-0.5 sm:mb-1">上涨</span>
+          <span className="font-bold text-sm sm:text-base text-up">{upCount}</span>
+        </div>
+        <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-md bg-background/50">
+          <span className="text-muted-foreground text-xs mb-0.5 sm:mb-1">平盘</span>
+          <span className="font-bold text-sm sm:text-base">{flatCount}</span>
+        </div>
+        <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-md bg-background/50">
+          <span className="text-muted-foreground text-xs mb-0.5 sm:mb-1">下跌</span>
+          <span className="font-bold text-sm sm:text-base text-down">{downCount}</span>
+        </div>
       </div>
     </div>
   );

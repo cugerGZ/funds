@@ -15,8 +15,8 @@ export const useSettingsStore = create<SettingsState>()(
       showGSZ: false,
       showAmount: true,
       showGains: true,
-      showCost: false,
-      showCostRate: false,
+      showCost: true,  // 默认显示持有收益
+      showCostRate: true,  // 默认显示持有收益率
       darkMode: false,  // 默认明亮主题
       sortType: { field: null, order: null },
       isLiveUpdate: true,

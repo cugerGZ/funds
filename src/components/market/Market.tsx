@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import React from 'react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { BarChart3, LineChart, Building2, ArrowUpCircle, ArrowDownCircle, Sparkles } from 'lucide-react';
 import MarketCapitalFlow from './MarketCapitalFlow';
 import MarketIndustryFlow from './MarketIndustryFlow';
@@ -8,10 +7,8 @@ import MarketNorthboundFlow from './MarketNorthboundFlow';
 import MarketSouthboundFlow from './MarketSouthboundFlow';
 
 export default function Market() {
-  const [activeTab, setActiveTab] = useState('capital');
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-5">
       {/* 页面标题 */}
       <div className="glass-card rounded-2xl p-5 sm:p-6 animate-fade-in">
         <div className="flex items-center gap-3">
@@ -28,48 +25,64 @@ export default function Market() {
         </div>
       </div>
 
-      {/* 行情标签页 */}
-      <Card className="glass-card p-4 sm:p-6 animate-fade-in stagger-1">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-4">
-            <TabsTrigger value="capital" className="flex items-center gap-1.5 text-xs sm:text-sm">
-              <LineChart className="h-4 w-4" />
-              <span className="hidden sm:inline">大盘资金</span>
-              <span className="sm:hidden">资金</span>
-            </TabsTrigger>
-            <TabsTrigger value="industry" className="flex items-center gap-1.5 text-xs sm:text-sm">
-              <Building2 className="h-4 w-4" />
-              <span className="hidden sm:inline">行业板块</span>
-              <span className="sm:hidden">行业</span>
-            </TabsTrigger>
-            <TabsTrigger value="northbound" className="flex items-center gap-1.5 text-xs sm:text-sm">
-              <ArrowUpCircle className="h-4 w-4" />
-              <span className="hidden sm:inline">北向资金</span>
-              <span className="sm:hidden">北向</span>
-            </TabsTrigger>
-            <TabsTrigger value="southbound" className="flex items-center gap-1.5 text-xs sm:text-sm">
-              <ArrowDownCircle className="h-4 w-4" />
-              <span className="hidden sm:inline">南向资金</span>
-              <span className="sm:hidden">南向</span>
-            </TabsTrigger>
-          </TabsList>
+      {/* 大盘资金流 */}
+      <Card className="glass-card animate-fade-in stagger-1">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <LineChart className="h-4 w-4 text-primary" />
+            </div>
+            <h3 className="text-base font-semibold">大盘资金流</h3>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <MarketCapitalFlow />
+        </CardContent>
+      </Card>
 
-          <TabsContent value="capital">
-            <MarketCapitalFlow />
-          </TabsContent>
+      {/* 行业板块 */}
+      <Card className="glass-card animate-fade-in stagger-2">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Building2 className="h-4 w-4 text-primary" />
+            </div>
+            <h3 className="text-base font-semibold">行业板块资金流</h3>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <MarketIndustryFlow />
+        </CardContent>
+      </Card>
 
-          <TabsContent value="industry">
-            <MarketIndustryFlow />
-          </TabsContent>
+      {/* 北向资金 */}
+      <Card className="glass-card animate-fade-in stagger-3">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-up/10">
+              <ArrowUpCircle className="h-4 w-4 text-up" />
+            </div>
+            <h3 className="text-base font-semibold">北向资金流</h3>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <MarketNorthboundFlow />
+        </CardContent>
+      </Card>
 
-          <TabsContent value="northbound">
-            <MarketNorthboundFlow />
-          </TabsContent>
-
-          <TabsContent value="southbound">
-            <MarketSouthboundFlow />
-          </TabsContent>
-        </Tabs>
+      {/* 南向资金 */}
+      <Card className="glass-card animate-fade-in stagger-4">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-down/10">
+              <ArrowDownCircle className="h-4 w-4 text-down" />
+            </div>
+            <h3 className="text-base font-semibold">南向资金流</h3>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <MarketSouthboundFlow />
+        </CardContent>
       </Card>
     </div>
   );

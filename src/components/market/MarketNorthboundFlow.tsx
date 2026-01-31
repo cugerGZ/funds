@@ -74,14 +74,15 @@ export default function MarketNorthboundFlow() {
       },
       legend: {
         show: true,
-        top: 10,
-        textStyle: { color: axisLabelColor },
+        top: 8,
+        textStyle: { color: axisLabelColor, fontSize: 10 },
+        itemGap: 8,
       },
       grid: {
-        top: 55,
-        bottom: 30,
-        left: 60,
-        right: 20,
+        top: 70,
+        bottom: 25,
+        left: 50,
+        right: 15,
       },
       xAxis: {
         type: 'category',
@@ -148,9 +149,9 @@ export default function MarketNorthboundFlow() {
   const { lastData } = data || { lastData: { value1: 0, balance1: 0, value3: 0, balance3: 0, value5: 0 } };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* 图表 */}
-      <div className="h-[220px]">
+      <div className="h-[240px] sm:h-[260px]">
         <ReactEChartsCore
           echarts={echarts}
           option={getChartOption()}
@@ -160,28 +161,28 @@ export default function MarketNorthboundFlow() {
       </div>
 
       {/* 数据统计 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm bg-muted/30 rounded-lg p-3">
-        <div className="flex flex-col items-center justify-center p-2 rounded-md bg-background/50">
-          <span className="text-muted-foreground text-xs mb-1">沪股通 当日净流入</span>
-          <div className="flex items-center gap-2">
-            <span className={cn("font-bold text-base", lastData.value1 >= 0 ? "text-up" : "text-down")}>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-sm bg-muted/30 rounded-lg p-2 sm:p-3">
+        <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-md bg-background/50">
+          <span className="text-muted-foreground text-xs mb-0.5 sm:mb-1">沪股通 当日净流入</span>
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+            <span className={cn("font-bold text-sm sm:text-base", lastData.value1 >= 0 ? "text-up" : "text-down")}>
               {lastData.value1.toFixed(2)}亿
             </span>
             <span className="text-muted-foreground text-xs">余额 {lastData.balance1.toFixed(0)}亿</span>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center p-2 rounded-md bg-background/50">
-          <span className="text-muted-foreground text-xs mb-1">深股通 当日净流入</span>
-          <div className="flex items-center gap-2">
-            <span className={cn("font-bold text-base", lastData.value3 >= 0 ? "text-up" : "text-down")}>
+        <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-md bg-background/50">
+          <span className="text-muted-foreground text-xs mb-0.5 sm:mb-1">深股通 当日净流入</span>
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+            <span className={cn("font-bold text-sm sm:text-base", lastData.value3 >= 0 ? "text-up" : "text-down")}>
               {lastData.value3.toFixed(2)}亿
             </span>
             <span className="text-muted-foreground text-xs">余额 {lastData.balance3.toFixed(0)}亿</span>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center p-2 rounded-md bg-primary/10">
-          <span className="text-muted-foreground text-xs mb-1">北向资金 当日净流入</span>
-          <span className={cn("font-bold text-lg", lastData.value5 >= 0 ? "text-up" : "text-down")}>
+        <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-md bg-primary/10">
+          <span className="text-muted-foreground text-xs mb-0.5 sm:mb-1">北向资金 当日净流入</span>
+          <span className={cn("font-bold text-base sm:text-lg", lastData.value5 >= 0 ? "text-up" : "text-down")}>
             {lastData.value5.toFixed(2)}亿
           </span>
         </div>

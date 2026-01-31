@@ -51,10 +51,10 @@ export default function MarketIndustryFlow() {
         },
       },
       grid: {
-        top: 30,
-        bottom: 90,
-        left: 60,
-        right: 20,
+        top: 25,
+        bottom: 85,
+        left: 50,
+        right: 15,
       },
       xAxis: {
         type: 'category',
@@ -129,7 +129,7 @@ export default function MarketIndustryFlow() {
   }
 
   return (
-    <div className="h-[300px]">
+    <div className="h-[320px] sm:h-[340px]">
       <ReactEChartsCore
         echarts={echarts}
         option={getChartOption()}

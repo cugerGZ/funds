@@ -120,10 +120,7 @@ export default function FundSearch({ onClose }: FundSearchProps) {
                     className="ml-3 shrink-0"
                   >
                     {added ? '已添加' : (
-                      <>
-                        <Plus className="h-4 w-4 mr-1" />
-                        添加
-                      </>
+                      <Plus className="h-4 w-4 mr-1" />
                     )}
                   </Button>
                 </div>

@@ -28,6 +28,8 @@ export default function FundList() {
   const [isDuringTrade, setIsDuringTrade] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  // 保存输入框的字符串值，避免小数点丢失
+  const [inputValues, setInputValues] = useState<Record<string, { cost?: string; num?: string }>>({});
   const [selectedFund, setSelectedFund] = useState<FundData | null>(null);
   const [adjustOpen, setAdjustOpen] = useState(false);
   const [adjustMode, setAdjustMode] = useState<'add' | 'reduce'>('add');
@@ -164,14 +166,50 @@ export default function FundList() {
 
   // 处理成本价变更
   const handleCostChange = (fundcode: string, value: string) => {
-    const cost = parseFloat(value) || 0;
+    // 只允许数字、小数点和空字符串
+    if (value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return;
+    }
+    // 更新本地 state，保持输入的原始字符串
+    setInputValues(prev => ({
+      ...prev,
+      [fundcode]: { ...prev[fundcode], cost: value }
+    }));
+  };
+
+  // 处理成本价失焦（计算数据）
+  const handleCostBlur = (fundcode: string, value: string) => {
+    const cost = value === '' ? undefined : parseFloat(value) || undefined;
     updateFundAndData(fundcode, { cost });
+    // 清除本地 state
+    setInputValues(prev => {
+      const { [fundcode]: _, ...rest } = prev;
+      return rest;
+    });
   };
 
   // 处理持有份额变更
   const handleNumChange = (fundcode: string, value: string) => {
-    const num = parseFloat(value) || 0;
+    // 只允许数字、小数点和空字符串
+    if (value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return;
+    }
+    // 更新本地 state，保持输入的原始字符串
+    setInputValues(prev => ({
+      ...prev,
+      [fundcode]: { ...prev[fundcode], num: value }
+    }));
+  };
+
+  // 处理持有份额失焦（计算数据）
+  const handleNumBlur = (fundcode: string, value: string) => {
+    const num = value === '' ? 0 : parseFloat(value) || 0;
     updateFundAndData(fundcode, { num });
+    // 清除本地 state
+    setInputValues(prev => {
+      const { [fundcode]: _, ...rest } = prev;
+      return rest;
+    });
   };
 
   const openAdjustDialog = (mode: 'add' | 'reduce', fund: FundData) => {
@@ -433,7 +471,7 @@ export default function FundList() {
                         </th>
                       )}
                       {!isEditing && (
-                        <th className="text-center py-3 px-4 font-medium text-muted-foreground whitespace-nowrap">更新时间</th>
+                        <th className="text-center py-3 px-3 font-medium text-muted-foreground whitespace-nowrap">更新时间</th>
                       )}
                       {isEditing && (
                         <th className="text-center py-3 px-3 font-medium text-muted-foreground whitespace-nowrap">加减仓</th>
@@ -481,8 +519,9 @@ export default function FundList() {
                               type="text"
                               inputMode="decimal"
                               placeholder="持仓成本价"
-                              value={fund.cost || ''}
+                              value={inputValues[fund.fundcode]?.cost ?? (fund.cost || '')}
                               onChange={(e) => handleCostChange(fund.fundcode, e.target.value)}
+                              onBlur={(e) => handleCostBlur(fund.fundcode, e.target.value)}
                               onClick={(e) => e.stopPropagation()}
                               className="w-28 h-8 px-2 text-center text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
                             />
@@ -496,8 +535,9 @@ export default function FundList() {
                               type="text"
                               inputMode="decimal"
                               placeholder="输入持有份额"
-                              value={fund.num || ''}
+                              value={inputValues[fund.fundcode]?.num ?? (fund.num || '')}
                               onChange={(e) => handleNumChange(fund.fundcode, e.target.value)}
+                              onBlur={(e) => handleNumBlur(fund.fundcode, e.target.value)}
                               onClick={(e) => e.stopPropagation()}
                               className="w-32 h-8 px-2 text-center text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
                             />
@@ -525,6 +565,13 @@ export default function FundList() {
                           </td>
                         )}
 
+                        {/* 估算收益 - 非编辑模式，居中 */}
+                        {showGains && !isEditing && (
+                          <td className={cn("text-center py-3 px-3 tabular-nums whitespace-nowrap", getChangeColor(fund.gains))}>
+                            {fund.num > 0 ? formatNumber(fund.gains) : '-'}
+                          </td>
+                        )}
+
                         {/* 涨跌幅 - 居中 */}
                         <td className={cn("text-center py-3 px-3 tabular-nums font-bold whitespace-nowrap", getChangeColor(fund.gszzl))}>
                           {fund.gszzl}%
@@ -532,7 +579,7 @@ export default function FundList() {
 
                         {/* 更新时间 - 非编辑模式，居中 */}
                         {!isEditing && (
-                          <td className="text-center py-3 px-4 text-muted-foreground text-xs whitespace-nowrap">
+                          <td className="text-center py-3 px-3 text-muted-foreground text-xs whitespace-nowrap">
                             {fund.gztime ? fund.gztime.substring(10) : '-'}
                           </td>
                         )}
