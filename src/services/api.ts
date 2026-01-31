@@ -1,8 +1,5 @@
 import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 
-// 判断是否为开发环境
-const isDev = import.meta.env.DEV;
-
 // 定义东方财富 API 响应类型
 interface EastmoneyResponse<T = any> {
   Datas: T;
@@ -44,16 +41,9 @@ export const apiGet = async <T = any>(url: string, params?: Record<string, any>)
   return response as unknown as EastmoneyResponse<T>;
 };
 
-// 获取 API URL
+// 获取 API URL - 始终使用代理路由
 export const getApiUrl = (type: 'fund' | 'index' | 'search') => {
-  if (isDev) {
-    return `/api/${type}`;
-  }
-  switch (type) {
-    case 'fund': return 'https://fundmobapi.eastmoney.com';
-    case 'index': return 'https://push2.eastmoney.com';
-    case 'search': return 'https://fundsuggest.eastmoney.com';
-  }
+  return `/api/${type}`;
 };
 
 export default api;
