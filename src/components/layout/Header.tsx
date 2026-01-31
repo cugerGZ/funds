@@ -71,12 +71,13 @@ export default function Header({ onRefresh, isLoading, activeTab, onTabChange }:
               size="icon"
               onClick={onRefresh}
               disabled={isLoading}
-              className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl hover:bg-primary/10 transition-all duration-300"
+              className="h-10 w-10 rounded-xl hover:bg-primary/10 transition-all duration-300 touch-manipulation active:scale-95"
+              aria-label="刷新"
             >
               {isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                <Loader2 className="h-5 w-5 animate-spin text-primary" />
               ) : (
-                <RefreshCw className="h-4 w-4 transition-transform duration-300 hover:rotate-180" />
+                <RefreshCw className="h-5 w-5 transition-transform duration-300 hover:rotate-180" />
               )}
             </Button>
 
@@ -89,19 +90,20 @@ export default function Header({ onRefresh, isLoading, activeTab, onTabChange }:
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl hover:bg-primary/10 md:hidden"
+                  className="h-10 w-10 rounded-xl hover:bg-primary/10 md:hidden touch-manipulation active:scale-95 transition-transform"
+                  aria-label="菜单"
                 >
-                  <Menu className="h-4 w-4" />
+                  <Menu className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-40">
+              <DropdownMenuContent align="end" className="w-40 z-[100]" sideOffset={8}>
                 {/* 导航菜单 */}
                 {tabs.map(({ id, label, icon: Icon }) => (
                   <DropdownMenuItem
                     key={id}
                     onClick={() => onTabChange(id)}
                     className={cn(
-                      "cursor-pointer",
+                      "cursor-pointer touch-manipulation",
                       activeTab === id && "bg-primary/10 text-primary"
                     )}
                   >

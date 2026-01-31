@@ -21,7 +21,7 @@ export default function ThemeToggle() {
       size="icon"
       onClick={() => setDarkMode(!darkMode)}
       aria-label={darkMode ? '切换到亮色模式' : '切换到暗色模式'}
-      className="relative overflow-hidden h-10 w-10 rounded-xl hover:bg-primary/10 transition-all duration-300 group"
+      className="relative overflow-hidden h-10 w-10 rounded-xl hover:bg-primary/10 transition-all duration-300 group touch-manipulation active:scale-95"
     >
       {/* 背景光晕 */}
       <div className={`absolute inset-0 rounded-xl transition-all duration-500 ${
