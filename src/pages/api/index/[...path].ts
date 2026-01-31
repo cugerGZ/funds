@@ -3,10 +3,10 @@ import type { APIRoute } from 'astro';
 export const GET: APIRoute = async ({ params, request }) => {
   const path = params.path || '';
   const url = new URL(request.url);
-  
+
   // 构建目标 URL
   const targetUrl = `https://push2.eastmoney.com/${path}${url.search}`;
-  
+
   try {
     const response = await fetch(targetUrl, {
       method: 'GET',
@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ params, request }) => {
     });
 
     const data = await response.text();
-    
+
     return new Response(data, {
       status: response.status,
       headers: {
