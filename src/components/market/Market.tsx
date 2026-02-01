@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { BarChart3, LineChart, Building2, ArrowUpCircle, ArrowDownCircle, Sparkles } from 'lucide-react';
 import MarketCapitalFlow from './MarketCapitalFlow';
+import MarketIndexOverview from './MarketIndexOverview';
 import MarketIndustryFlow from './MarketIndustryFlow';
 import MarketNorthboundFlow from './MarketNorthboundFlow';
 import MarketSouthboundFlow from './MarketSouthboundFlow';
@@ -25,9 +26,24 @@ export default function Market() {
         </div>
       </div>
 
-      {/* 大盘资金流 */}
+      {/* 指数概览 */}
       <Card className="glass-card animate-fade-in stagger-1">
-        <CardHeader className="pb-3">
+        <CardHeader className="py-2 pb-1 sm:py-2 sm:pb-1">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <BarChart3 className="h-4 w-4 text-primary" />
+            </div>
+            <h3 className="text-base font-semibold">指数概览</h3>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <MarketIndexOverview />
+        </CardContent>
+      </Card>
+
+      {/* 大盘资金流 */}
+      <Card className="glass-card animate-fade-in stagger-2">
+        <CardHeader className="py-2 pb-1 sm:py-2 sm:pb-1">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-lg bg-primary/10">
               <LineChart className="h-4 w-4 text-primary" />
@@ -41,8 +57,8 @@ export default function Market() {
       </Card>
 
       {/* 行业板块 */}
-      <Card className="glass-card animate-fade-in stagger-2">
-        <CardHeader className="pb-3">
+      <Card className="glass-card animate-fade-in stagger-3">
+        <CardHeader className="py-2 pb-1 sm:py-2 sm:pb-1">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-lg bg-primary/10">
               <Building2 className="h-4 w-4 text-primary" />
@@ -56,8 +72,8 @@ export default function Market() {
       </Card>
 
       {/* 北向资金 */}
-      <Card className="glass-card animate-fade-in stagger-3">
-        <CardHeader className="pb-3">
+      <Card className="glass-card animate-fade-in stagger-4">
+        <CardHeader className="py-2 pb-1 sm:py-2 sm:pb-1">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-lg bg-up/10">
               <ArrowUpCircle className="h-4 w-4 text-up" />
@@ -71,8 +87,8 @@ export default function Market() {
       </Card>
 
       {/* 南向资金 */}
-      <Card className="glass-card animate-fade-in stagger-4">
-        <CardHeader className="pb-3">
+      <Card className="glass-card animate-fade-in stagger-5">
+        <CardHeader className="py-2 pb-1 sm:py-2 sm:pb-1">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-lg bg-down/10">
               <ArrowDownCircle className="h-4 w-4 text-down" />

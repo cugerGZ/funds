@@ -30,7 +30,12 @@ export default function Header({ onRefresh, isLoading, activeTab, onTabChange }:
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 sm:h-16 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2 sm:gap-3 group cursor-pointer shrink-0">
+          <button
+            type="button"
+            onClick={() => onTabChange('funds')}
+            className="flex items-center gap-2 sm:gap-3 group cursor-pointer shrink-0"
+            aria-label="返回首页"
+          >
             <div className="relative">
               <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-primary/50 shadow-lg shadow-primary/25 transition-transform duration-300 group-hover:scale-105">
                 <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
@@ -42,7 +47,7 @@ export default function Header({ onRefresh, isLoading, activeTab, onTabChange }:
             <span className="font-bold text-base sm:text-xl tracking-tight">
               基金派
             </span>
-          </div>
+          </button>
 
           {/* 桌面端导航标签 */}
           <nav className="hidden md:flex items-center gap-1 sm:gap-2">

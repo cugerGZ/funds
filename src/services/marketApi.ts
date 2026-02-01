@@ -1,5 +1,43 @@
 import api, { getApiUrl } from './api';
 
+// 指数概览
+export interface IndexQuote {
+  code: string;
+  name: string;
+  price: number;
+  change: number;
+  changePercent: number;
+}
+
+const DEFAULT_INDEX_SECIDS = '1.000001,1.000300,0.399001,0.399006';
+
+export const fetchIndexOverview = async (secids: string = DEFAULT_INDEX_SECIDS): Promise<IndexQuote[]> => {
+  const baseUrl = getApiUrl('index');
+  const url = `${baseUrl}/api/qt/ulist.np/get`;
+
+  try {
+    const response: any = await api.get(url, {
+      params: {
+        fltt: 2,
+        secids,
+        fields: 'f12,f14,f2,f3,f4',
+      },
+    });
+
+    const diff = response.data?.diff || [];
+    return diff.map((item: any) => ({
+      code: item.f12,
+      name: item.f14,
+      price: Number(item.f2) || 0,
+      change: Number(item.f4) || 0,
+      changePercent: Number(item.f3) || 0,
+    }));
+  } catch (error) {
+    console.error('Failed to fetch index overview:', error);
+    return [];
+  }
+};
+
 // 获取两市成交额数据
 export interface TurnoverData {
   f6: number;   // 成交额

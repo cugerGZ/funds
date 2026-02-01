@@ -196,10 +196,6 @@ export default function Settings() {
             </div>
           </div>
           <div className="space-y-2 text-sm text-muted-foreground">
-            <p className="flex items-center gap-2">
-              <span className="w-16">数据来源</span>
-              <span className="text-foreground">东方财富</span>
-            </p>
             <div className="pt-3 mt-3 border-t border-white/5">
               <p className="text-xs leading-relaxed">
                 免责声明：本应用仅供学习参考，不构成任何投资建议。投资有风险，入市需谨慎。

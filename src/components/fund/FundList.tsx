@@ -387,7 +387,7 @@ export default function FundList() {
                 <Button
                   size="sm"
                   onClick={() => setShowSearch(true)}
-                  className="h-9 rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg shadow-primary/25"
+                  className="h-9 rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg shadow-primary/25 text-white dark:text-white"
                 >
                   添加基金
                 </Button>

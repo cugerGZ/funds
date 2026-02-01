@@ -24,6 +24,30 @@ export default function App() {
     }
   }, [darkMode]);
 
+  // 路由同步
+  const getTabFromPath = useCallback((path: string) => {
+    if (path.startsWith('/market')) return 'market';
+    if (path.startsWith('/settings')) return 'settings';
+    return 'funds';
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const applyPath = () => setActiveTab(getTabFromPath(window.location.pathname));
+    applyPath();
+    window.addEventListener('popstate', applyPath);
+    return () => window.removeEventListener('popstate', applyPath);
+  }, [getTabFromPath]);
+
+  const navigateTab = useCallback((tab: string) => {
+    if (typeof window === 'undefined') return;
+    const path = tab === 'market' ? '/market' : tab === 'settings' ? '/settings' : '/';
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
+    setActiveTab(tab);
+  }, []);
+
   // 刷新数据
   const refreshData = useCallback(async () => {
     setIsLoading(true);
@@ -88,7 +112,7 @@ export default function App() {
             onRefresh={refreshData}
             isLoading={isLoading}
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            onTabChange={navigateTab}
           />
         </div>
       </div>

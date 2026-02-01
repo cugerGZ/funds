@@ -16,7 +16,6 @@ export default function FundSearch({ onClose }: FundSearchProps) {
   const [keyword, setKeyword] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [recentCodes] = useState<string[]>(['000001', '110011', '161725', '005827']);
 
   const { fundList, addFund } = useFundStore();
 
@@ -52,13 +51,12 @@ export default function FundSearch({ onClose }: FundSearchProps) {
     <div className="space-y-4">
       {/* 搜索框 */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           type="text"
           placeholder="搜索基金代码或名称"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          className="pl-10 pr-10 h-12 text-base"
+          className="px-4 h-12 text-base"
           autoFocus
         />
         {keyword && (
@@ -134,31 +132,6 @@ export default function FundSearch({ onClose }: FundSearchProps) {
       {!isSearching && keyword && results.length === 0 && (
         <div className="text-center py-8 text-muted-foreground">
           未找到相关基金
-        </div>
-      )}
-
-      {/* 热门基金 */}
-      {!keyword && (
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-muted-foreground">热门基金</h3>
-          <div className="flex flex-wrap gap-2">
-            {recentCodes.map((code) => {
-              const added = isAdded(code);
-              return (
-                <Button
-                  key={code}
-                  variant={added ? "secondary" : "outline"}
-                  size="sm"
-                  disabled={added}
-                  onClick={() => handleAdd(code)}
-                  className="font-mono"
-                >
-                  {code}
-                  {!added && <Plus className="h-3 w-3 ml-1" />}
-                </Button>
-              );
-            })}
-          </div>
         </div>
       )}
     </div>
